@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -22,7 +21,6 @@ import {
   Code2,
   LineChart,
   Mail,
-  Phone,
   Rocket,
   CheckCircle2,
   Brain,
@@ -31,10 +29,9 @@ import {
 } from "lucide-react";
 
 // ----------------------------------
-// Data
+// Data Configuration
 // ----------------------------------
 
-// 已修改：讓每個產品可選擇加上 url（CTA 連到 HTML）
 type Product = {
   id: string;
   title: string;
@@ -43,7 +40,7 @@ type Product = {
   bullets: string[];
   tags: string[];
   cta: string;
-  url?: string; // 若存在，CTA 以新視窗開啟
+  url?: string;
 };
 
 const PRODUCTS: Product[] = [
@@ -59,7 +56,7 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["JSL", "代寫"],
     cta: "了解代寫流程",
-    url: "/reports/JSLwirt.html", // 已修改：點 CTA 開啟 HTML（新視窗）
+    url: "/reports/JSLwirt.html",
   },
   {
     id: "p2",
@@ -73,7 +70,7 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["視覺化", "SPC"],
     cta: "查看展示",
-    url: "/reports/GraphBuilder.html", // 已修改：點 CTA 開啟 HTML（新視窗）
+    url: "/reports/GraphBuilder.html",
   },
   {
     id: "p3",
@@ -83,7 +80,7 @@ const PRODUCTS: Product[] = [
     bullets: ["MSA 平台操作與解讀", "JSL 一鍵重跑與匯出", "與製程 SPC 串接"],
     tags: ["MSA"],
     cta: "索取範例報告",
-    url: "/reports/MSA.html", // 已修改：點 CTA 開啟 HTML（新視窗）
+    url: "/reports/MSA.html",
   },
   {
     id: "p4",
@@ -97,7 +94,7 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["建模"],
     cta: "預約技術諮詢",
-    url: "/reports/model.html", // 已修改：點 CTA 開啟 HTML（新視窗）
+    url: "/reports/model.html",
   },
   {
     id: "p5",
@@ -111,7 +108,7 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["JSL", "工程"],
     cta: "討論需求",
-    url: "/reports/Auto.html", // 已修改：點 CTA 開啟 HTML（新視窗）
+    url: "/reports/Auto.html",
   },
   {
     id: "p6",
@@ -125,7 +122,7 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["顧問/訓練"],
     cta: "取得課綱",
-    url: "/reports/training.html", // 已修改：點 CTA 開啟 HTML（新視窗）
+    url: "/reports/training.html",
   },
 ];
 
@@ -167,8 +164,9 @@ const FAQ = [
 const TAGS = ["JSL", "視覺化", "MSA", "DOE", "SPC", "建模", "顧問/訓練"] as const;
 
 // ----------------------------------
-// Small components
+// Sub-Components
 // ----------------------------------
+
 const Section = ({
   id,
   title,
@@ -217,7 +215,6 @@ function ProductGrid({ items }: { items: Product[] }) {
             </div>
           </CardContent>
           <CardFooter className="justify-between">
-            {/* 已修改：若此產品物件含 url，CTA 以新視窗開啟該 HTML */}
             {p.url ? (
               <a href={p.url} target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="sm">
@@ -240,9 +237,14 @@ function ProductGrid({ items }: { items: Product[] }) {
 }
 
 // ----------------------------------
-// Main component
+// Main Site Component
 // ----------------------------------
+
 export default function Site() {
+  // 1. 控制影片播放狀態
+  const [showIntro, setShowIntro] = useState(true);
+
+  // 2. 原本的過濾器狀態
   const [keyword, setKeyword] = useState("");
   const [activeTab, setActiveTab] = useState<string>("all");
 
@@ -262,8 +264,51 @@ export default function Site() {
     });
   }, [keyword, tag]);
 
+  // 影片播放結束時觸發
+  const handleVideoEnded = () => {
+    setShowIntro(false);
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative">
+      
+      {/* -------------------- */}
+      {/* Intro Video Overlay  */}
+      {/* -------------------- */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            key="intro-video"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+          >
+            {/* 路徑說明：
+                /reports/StartMV.mp4 對應專案中的 public/reports/StartMV.mp4 
+            */}
+            <video
+              src="/reports/StartMV.mp4"
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              playsInline
+              onEnded={handleVideoEnded}
+            />
+            {/* 跳過按鈕 (可選) */}
+            <button
+              onClick={() => setShowIntro(false)}
+              className="absolute bottom-8 right-8 text-white/60 hover:text-white text-xs border border-white/30 px-4 py-2 rounded-full transition-colors backdrop-blur-sm"
+            >
+              Skip Intro
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* -------------------- */}
+      {/* Main Website Content */}
+      {/* -------------------- */}
+      
       {/* Skip link for a11y */}
       <a href="#home" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50">
         跳到主要內容
@@ -273,34 +318,22 @@ export default function Site() {
       <header className="sticky top-0 z-50 backdrop-blur bg-background/70 border-b">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <a href="#home" className="font-extrabold tracking-tight text-lg md:text-xl" aria-label="匠映分析 首頁">
-            {/* 已修改：品牌名稱與英文標語樣式（英文灰色、較小） */}
             <span className="mr-2">匠映分析</span>
             <span className="text-xs text-muted-foreground font-medium">Jump in Future</span>
           </a>
           <nav className="hidden md:flex gap-6 text-sm" aria-label="主導覽">
-            <a href="#about" className="hover:underline">
-              公司介紹
-            </a>
-            <a href="#products" className="hover:underline">
-              產品/服務
-            </a>
-            <a href="#cases" className="hover:underline">
-              案例
-            </a>
-            <a href="#process" className="hover:underline">
-              合作流程
-            </a>
-            <a href="#contact" className="hover:underline">
-              聯絡我們
-            </a>
+            <a href="#about" className="hover:underline">公司介紹</a>
+            <a href="#products" className="hover:underline">產品/服務</a>
+            <a href="#cases" className="hover:underline">案例</a>
+            <a href="#process" className="hover:underline">合作流程</a>
+            <a href="#contact" className="hover:underline">聯絡我們</a>
           </nav>
-<div className="flex items-center gap-2">
-  <a href="#contact" className="hidden sm:inline-flex">
-    <Button size="sm">
-      <Mail className="w-4 h-4 mr-2" />
-      快速洽談
-    </Button>
-
+          <div className="flex items-center gap-2">
+            <a href="#contact" className="hidden sm:inline-flex">
+              <Button size="sm">
+                <Mail className="w-4 h-4 mr-2" />
+                快速洽談
+              </Button>
             </a>
           </div>
         </div>
@@ -353,15 +386,15 @@ export default function Site() {
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <div className="text-2xl font-bold">資料庫 - SQL</div>
-                    <div className="text-xs text-muted-foreground">數據分析的核心 & 技術突破的金鑰匙 → 資料庫</div>
+                    <div className="text-xs text-muted-foreground">數據分析的核心</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">統計預測建模</div>
-                    <div className="text-xs text-muted-foreground">從顯著性到預測力，建立可解釋的模型</div>
+                    <div className="text-2xl font-bold">統計預測</div>
+                    <div className="text-xs text-muted-foreground">建立可解釋的模型</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">互動圖形報表</div>
-                    <div className="text-xs text-muted-foreground">即點即過濾，數據與視圖雙向聯動</div>
+                    <div className="text-2xl font-bold">互動報表</div>
+                    <div className="text-xs text-muted-foreground">數據與視圖雙向聯動</div>
                   </div>
                 </div>
                 <Separator className="my-4" />
@@ -373,11 +406,10 @@ export default function Site() {
                     <CheckCircle2 className="w-4 h-4 mt-0.5" /> 可維護：模組化函式、測試與型別標註
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-0.5" /> 可交付：一鍵輸出 HTML 報告並可用 Python mail 發送
+                    <CheckCircle2 className="w-4 h-4 mt-0.5" /> 可交付：一鍵輸出 HTML 報告
                   </li>
                 </ul>
               </CardContent>
-
             </Card>
           </motion.div>
         </div>
@@ -399,7 +431,6 @@ export default function Site() {
           </Card>
           <Card className="rounded-2xl">
             <CardHeader>
-              {/* 已修改：修正 items中心 → items-center */}
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="w-5 h-5" /> 業務範圍
               </CardTitle>
@@ -425,29 +456,20 @@ export default function Site() {
 
       {/* Products & services */}
       <Section id="products" title="產品與服務" subtitle="以需求為導向的模組化交付">
-        {/* Controlled Tabs: keep content visible while using tabs as filters */}
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v)} className="w-full">
           <TabsList className="flex flex-wrap">
-            <TabsTrigger value="all" onClick={() => setActiveTab("all")}>
-              全部
-            </TabsTrigger>
+            <TabsTrigger value="all" onClick={() => setActiveTab("all")}>全部</TabsTrigger>
             {TAGS.map((t) => (
-              <TabsTrigger key={t} value={t} onClick={() => setActiveTab(t)}>
-                {t}
-              </TabsTrigger>
+              <TabsTrigger key={t} value={t} onClick={() => setActiveTab(t)}>{t}</TabsTrigger>
             ))}
           </TabsList>
-
           <div className="mt-4 flex items-center gap-2">
             <Input
-              placeholder="關鍵字過濾：例如 MSA、DOE、Graph Builder…" // 已修改：用 JMP 常用詞
+              placeholder="關鍵字過濾：例如 MSA、DOE、Graph Builder…"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
-              aria-label="產品搜尋關鍵字"
             />
           </div>
-
-          {/* Single content bound to current tab value, items filtered by both tab & keyword */}
           <TabsContent value={activeTab} className="mt-6">
             <ProductGrid items={filtered} />
           </TabsContent>
@@ -468,7 +490,7 @@ export default function Site() {
           </Card>
           <Card className="rounded-2xl">
             <CardHeader>
-              <CardTitle>員工輕鬆工作，減少不必要重複性工作</CardTitle>
+              <CardTitle>減少重複性工作</CardTitle>
               <CardDescription>作業流程一鍵化</CardDescription>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
@@ -477,7 +499,7 @@ export default function Site() {
           </Card>
           <Card className="rounded-2xl">
             <CardHeader>
-              <CardTitle>產品檢測時間縮短 40%</CardTitle>
+              <CardTitle>檢測時間縮短 40%</CardTitle>
               <CardDescription>自動化報告 | Machine Log</CardDescription>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
@@ -494,9 +516,7 @@ export default function Site() {
             <Card key={i} className="rounded-2xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Badge variant="secondary" className="rounded-full">
-                    {i + 1}
-                  </Badge>
+                  <Badge variant="secondary" className="rounded-full">{i + 1}</Badge>
                   {s.title}
                 </CardTitle>
               </CardHeader>
@@ -506,85 +526,78 @@ export default function Site() {
         </div>
       </Section>
 
-{/* Contact */}
-<Section
-  id="contact"
-  title="聯絡我們"
-  subtitle="目前採 LINE 一對一洽談，如需服務請加好友並留言您的需求"
->
-  <div className="grid md:grid-cols-2 gap-8 items-start">
-    {/* 左側：LINE 聯絡方式 */}
-    <Card className="rounded-2xl">
-      <CardHeader>
-        <CardTitle>透過 LINE 聯絡匠映分析</CardTitle>
-        <CardDescription>加入好友後，請簡單說明您的產業、需求與時程</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground mb-4">
-          建議先提供：目前使用工具（JMP / Excel / 其他）、資料類型（製程、量測、實驗）、以及希望解決的問題，我們會回覆合適的做法與合作模式。
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 items-start">
-          {/* 官方 LINE 加好友按鈕 */}
-          <a
-            href="https://lin.ee/ngYdJbH"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="透過 LINE 聯絡匠映分析"
-          >
-            <img
-              src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png"
-              alt="加入匠映分析 LINE 好友"
-              height={36}
-            />
-          </a>
-
-          {/* 本地 QR Code 圖檔 */}
-          <img
-            src="/reports/M_gainfriends_2dbarcodes_GW.png"
-            alt="匠映分析 LINE QR Code"
-            className="w-32 h-32 border rounded-md"
-          />
+      {/* Contact */}
+      <Section
+        id="contact"
+        title="聯絡我們"
+        subtitle="目前採 LINE 一對一洽談，如需服務請加好友並留言您的需求"
+      >
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+          <Card className="rounded-2xl">
+            <CardHeader>
+              <CardTitle>透過 LINE 聯絡匠映分析</CardTitle>
+              <CardDescription>加入好友後，請簡單說明您的產業、需求與時程</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                建議先提供：目前使用工具（JMP / Excel / 其他）、資料類型（製程、量測、實驗）、以及希望解決的問題，我們會回覆合適的做法與合作模式。
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 items-start">
+                <a
+                  href="https://lin.ee/ngYdJbH"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="透過 LINE 聯絡匠映分析"
+                >
+                  <img
+                    src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png"
+                    alt="加入匠映分析 LINE 好友"
+                    height={36}
+                    className="h-[36px] w-auto"
+                  />
+                </a>
+                <img
+                  src="/reports/M_gainfriends_2dbarcodes_GW.png"
+                  alt="匠映分析 LINE QR Code"
+                  className="w-32 h-32 border rounded-md"
+                />
+              </div>
+            </CardContent>
+          </Card>
+          <div className="space-y-6">
+            <Card className="rounded-2xl">
+              <CardHeader>
+                <CardTitle>為何選擇我們？</CardTitle>
+                <CardDescription>工程 × 統計 × 程式語言</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3 text-sm text-muted-foreground list-disc pl-5">
+                  <li>以商業指標為導向的統計解法，避免紙上談兵</li>
+                  <li>模組化代碼、測試與文件齊備，易於維護</li>
+                  <li>尊重安全與隱私</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="rounded-2xl">
+              <CardHeader>
+                <CardTitle>常見問題</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Accordion type="single" collapsible className="w-full">
+                  {FAQ.map((f, i) => (
+                    <AccordionItem value={`item-${i}`} key={i}>
+                      <AccordionTrigger className="text-left">{f.q}</AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground">
+                        {f.a}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </CardContent>
-    </Card>
-
-    {/* 右側：維持原本「為何選擇我們」與「常見問題」 */}
-    <div className="space-y-6">
-      <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle>為何選擇我們？</CardTitle>
-          <CardDescription>工程 × 統計 × 程式語言</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-3 text-sm text-muted-foreground list-disc pl-5">
-            <li>以商業指標為導向的統計解法，避免紙上談兵</li>
-            <li>模組化代碼、測試與文件齊備，易於維護</li>
-            <li>尊重安全與隱私</li>
-          </ul>
-        </CardContent>
-      </Card>
-
-      <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle>常見問題</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Accordion type="single" collapsible className="w-full">
-            {FAQ.map((f, i) => (
-              <AccordionItem value={`item-${i}`} key={i}>
-                <AccordionTrigger className="text-left">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </CardContent>
-      </Card>
-    </div>
-  </div>
-</Section>
-
+      </Section>
 
       {/* Footer */}
       <footer className="border-t py-10">
