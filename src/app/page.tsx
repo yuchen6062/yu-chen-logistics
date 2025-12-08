@@ -26,6 +26,8 @@ import {
   Brain,
   Box,
   Activity,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 
 // ----------------------------------
@@ -244,7 +246,10 @@ export default function Site() {
   // 1. 控制影片播放狀態
   const [showIntro, setShowIntro] = useState(true);
 
-  // 2. 原本的過濾器狀態
+  // 2. 控制聲音狀態 (預設必須是 true 靜音，否則無法自動播放)
+  const [isMuted, setIsMuted] = useState(true);
+
+  // 原本的過濾器狀態
   const [keyword, setKeyword] = useState("");
   const [activeTab, setActiveTab] = useState<string>("all");
 
@@ -283,21 +288,36 @@ export default function Site() {
             exit={{ opacity: 0, transition: { duration: 0.8 } }}
             className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
           >
-            {/* 路徑說明：
-                /reports/StartMV.mp4 對應專案中的 public/reports/StartMV.mp4 
+            {/* CSS 修正重點：
+               1. h-[100dvh]: 解決手機瀏覽器網址列導致的高度問題 (Dynamic Viewport Height)
+               2. object-contain: 手機版時，完整顯示影片內容 (會有黑邊，但不會被裁切)
+               3. md:object-cover: 電腦/平板版時，轉為全螢幕填滿模式
             */}
             <video
               src="/reports/StartMV.mp4"
-              className="w-full h-full object-cover"
+              className="w-full h-[100dvh] object-contain md:object-cover" 
               autoPlay
-              muted
+              muted={isMuted}
               playsInline
               onEnded={handleVideoEnded}
             />
-            {/* 跳過按鈕 (可選) */}
+            
+            {/* 聲音切換按鈕 */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // 防止誤觸
+                setIsMuted(!isMuted);
+              }}
+              className="absolute bottom-8 left-8 text-white/80 hover:text-white border border-white/30 p-3 rounded-full transition-colors backdrop-blur-sm z-10"
+              aria-label={isMuted ? "開啟聲音" : "關閉聲音"}
+            >
+              {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+            </button>
+
+            {/* 跳過按鈕 */}
             <button
               onClick={() => setShowIntro(false)}
-              className="absolute bottom-8 right-8 text-white/60 hover:text-white text-xs border border-white/30 px-4 py-2 rounded-full transition-colors backdrop-blur-sm"
+              className="absolute bottom-8 right-8 text-white/60 hover:text-white text-xs border border-white/30 px-4 py-2 rounded-full transition-colors backdrop-blur-sm z-10"
             >
               Skip Intro
             </button>
