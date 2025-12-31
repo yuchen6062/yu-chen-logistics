@@ -53,11 +53,3 @@ sonic-analytics/
 - Production 建置：`npm run build` → `npm run start`  
 - Docker 化：因 `next.config.mjs` 設為 `output: 'standalone'`，可直接把 `.next/standalone` 帶上線，或自行撰寫 `Dockerfile`。
 
----
-
-如需 **表單串接 FastAPI/Flask 寄信**、**GA/Meta Pixel 事件**、**Docker + Nginx + SSL**，告訴我要放的網域與需求，我可直接補檔。
-
-
-git add .
-git commit -m "config for cloudflare pages"
-git push
