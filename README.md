@@ -1,7 +1,5 @@
 \
-# Sonic Analytics – Next.js Landing Page
-
-可直接執行的 Next.js (App Router + TS + Tailwind) 專案骨架，內建最小 UI 元件，已放入首頁 `src/app/page.tsx`。
+**線上網站**: [https://www.jmpin.com.tw](https://www.jmpin.com.tw)
 
 ## 本機執行（Windows 範例：放到 `C:\JI_company`）
 
@@ -53,3 +51,16 @@ sonic-analytics/
 - Production 建置：`npm run build` → `npm run start`  
 - Docker 化：因 `next.config.mjs` 設為 `output: 'standalone'`，可直接把 `.next/standalone` 帶上線，或自行撰寫 `Dockerfile`。
 
+---
+
+如需 **表單串接 FastAPI/Flask 寄信**、**GA/Meta Pixel 事件**、**Docker + Nginx + SSL**，告訴我要放的網域與需求，我可直接補檔。
+
+
+# 1. 加入所有變更
+git add .
+
+# 2. 寫下這次改了什麼 (例如：新增Python服務介紹)
+git commit -m "Add new Python service product"
+
+# 3. 推送到 GitHub (這會觸發 Vercel 自動更新)
+git push
