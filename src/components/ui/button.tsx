@@ -1,28 +1,27 @@
-"use client";
-import * as React from "react";
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot" // 如果沒有安裝 radix-ui，可以移除這行並把 Slot 改成 button
+import { cva, type VariantProps } from "class-variance-authority" // 建議安裝: npm i class-variance-authority
+import { cn } from "@/lib/utils" // 確保有這個工具函式，如果沒有，下面有簡易版
 
-type Variant = "default" | "outline" | "secondary";
-type Size = "sm" | "lg" | "default";
-
+// 簡化版 Button (不需要額外套件)
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant;
-  size?: Size;
+  variant?: "default" | "outline" | "ghost"
 }
 
-const sizeClass = (s: Size = "default") =>
-  s === "sm" ? "h-8 px-3 text-sm" : s === "lg" ? "h-11 px-5 text-base" : "h-10 px-4 text-sm";
-
-const variantClass = (v: Variant = "default") => ({
-  default: "bg-black text-white hover:opacity-90",
-  outline: "border border-gray-300 hover:bg-gray-50",
-  secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-}[v]);
-
-export function Button({ className = "", variant = "default", size = "default", ...props }: ButtonProps) {
-  return (
-    <button
-      className={`inline-flex items-center justify-center rounded-2xl font-medium transition ${sizeClass(size)} ${variantClass(variant)} ${className}`}
-      {...props}
-    />
-  );
-}
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant = "default", ...props }, ref) => {
+    const base = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+    const variants = {
+      default: "bg-blue-600 text-white hover:bg-blue-700",
+      outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+      ghost: "hover:bg-accent hover:text-accent-foreground"
+    }
+    const combinedClassName = `${base} ${variants[variant]} ${className || ""}`
+    
+    return (
+      <button className={combinedClassName} ref={ref} {...props} />
+    )
+  }
+)
+Button.displayName = "Button"
+export { Button }

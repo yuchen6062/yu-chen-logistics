@@ -3,10 +3,10 @@
 
 ## 本機執行（Windows 範例：放到 `C:\JI_company`）
 
-1. 下載本專案 ZIP，解壓縮到 `C:\JI_company\sonic-analytics`。  
+1. 下載本專案 ZIP，解壓縮到 `C:\yuchen_company\yuchen_company\`。  
 2. 開啟 PowerShell / VS Code 內建終端機：
    ```powershell
-   cd C:\JI_company\sonic-analytics
+   cd C:\yuchen_company\yuchen_company
    npm.cmd run dev
    ```
 3. 瀏覽 `http://localhost:3000`。
@@ -64,3 +64,27 @@ git commit -m "Add new Python service product"
 
 # 3. 推送到 GitHub (這會觸發 Vercel 自動更新)
 git push
+
+
+
+
+
+
+# 1. 初始化 Git (讓資料夾變成 Git 專案)
+git init
+
+# 2. 將所有檔案加入暫存區
+git add .
+
+# 3. 提交第一次版本 (Create first commit)
+git commit -m "Initial commit: Yu-Chen Logistics Website"
+
+# 4. 將分支重新命名為 main (目前主流標準)
+git branch -M main
+
+# 5. 連結到你剛剛在 GitHub 建立的倉庫
+# ★請將下方的網址換成你剛剛複製的網址★
+git remote add origin https://github.com/yuchen6062/yu-chen-logistics.git
+
+# 6. 推送上去
+git push -u origin main
