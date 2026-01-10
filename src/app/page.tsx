@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,13 +13,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+// 移除可能故障的 Accordion 引用
+// import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"; 
 import { Separator } from "@/components/ui/separator";
 import {
   Truck,
   Plane,
   Ship,
-  Package,
   Globe,
   Warehouse,
   Anchor,
@@ -28,7 +27,7 @@ import {
   Clock,
   ShieldCheck,
   Phone,
-  Mail,
+  ChevronDown, // 新增箭頭圖示
 } from "lucide-react";
 
 // ----------------------------------
@@ -221,8 +220,15 @@ function ProductGrid({ items }: { items: Product[] }) {
 export default function Site() {
   const [keyword, setKeyword] = useState("");
   const [activeTab, setActiveTab] = useState<string>("all");
+  
+  // ▼▼▼ 新增：FAQ 專用的狀態，用來控制哪一個被打開 (index) ▼▼▼
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
-  // 自動偵測深色模式
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+  // ▲▲▲ 新增結束 ▲▲▲
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleThemeChange = () => {
@@ -256,42 +262,12 @@ export default function Site() {
   return (
     <div className="min-h-screen bg-background text-foreground relative dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300">
       
-      <a href="#home" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 dark:text-white">
-        跳到主要內容
-      </a>
-
-      {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur bg-background/70 border-b dark:bg-slate-950/70 dark:border-slate-800">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <a href="#home" className="font-extrabold tracking-tight text-lg md:text-xl flex items-center gap-2" aria-label="宇辰國際物流 首頁">
-            {/* Logo Icon Mockup */}
-            <div className="bg-[#003366] text-white p-1 rounded dark:bg-blue-600">
-                <Globe size={20} />
-            </div>
-            <span className="mr-1 text-[#003366] dark:text-blue-400">宇辰國際物流</span>
-            <span className="hidden sm:inline text-xs text-muted-foreground font-medium uppercase tracking-widest">Yu-Chen Logistics</span>
-          </a>
-          <nav className="hidden md:flex gap-6 text-sm font-medium" aria-label="主導覽">
-            <a href="#about" className="hover:text-[#003366] dark:hover:text-blue-400 transition-colors">關於我們</a>
-            <a href="#products" className="hover:text-[#003366] dark:hover:text-blue-400 transition-colors">服務項目</a>
-            <a href="#track" className="hover:text-[#003366] dark:hover:text-blue-400 transition-colors">貨況查詢</a>
-            <a href="#contact" className="hover:text-[#003366] dark:hover:text-blue-400 transition-colors">聯絡我們</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <a href="#contact" className="hidden sm:inline-flex">
-              <Button size="sm" className="bg-[#003366] text-white dark:bg-blue-600 dark:hover:bg-blue-700">
-                <Mail className="w-4 h-4 mr-2" />
-                線上詢價
-              </Button>
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero */}
+      {/* Hero Section */}
       <section id="home" className="relative overflow-hidden bg-slate-50/50 dark:bg-slate-950/50">
         <div className="max-w-6xl mx-auto px-4 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          
+          {/* 左側文字區塊 */}
+          <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
               連結世界 <br />
               <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">運籌帷幄的物流夥伴</span>
@@ -300,7 +276,7 @@ export default function Site() {
               宇辰國際物流 (Yu-Chen International) 整合海空運、倉儲與內陸運輸，為您的供應鏈提供最精準、快速的解決方案。
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="#products">
+              <a href="#service">
                 <Button size="lg" className="bg-[#003366] text-white dark:bg-blue-600 dark:hover:bg-blue-700">
                   <Ship className="w-5 h-5 mr-2" />
                   探索服務
@@ -319,12 +295,10 @@ export default function Site() {
                 </Badge>
               ))}
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
+          </div>
+
+          {/* 右側卡片區塊 */}
+          <div>
             <Card className="rounded-2xl shadow-xl border-t-4 border-t-[#003366] dark:bg-slate-900 dark:border-slate-800 dark:border-t-blue-500">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -357,7 +331,7 @@ export default function Site() {
                 </ul>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -384,7 +358,7 @@ export default function Site() {
       </Section>
 
       {/* Products & services */}
-      <Section id="products" title="服務項目" subtitle="全方位的供應鏈解決方案">
+      <Section id="service" title="服務項目" subtitle="全方位的供應鏈解決方案">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v)} className="w-full">
           <TabsList className="flex flex-wrap bg-slate-100 dark:bg-slate-900 p-1">
             <TabsTrigger value="all" onClick={() => setActiveTab("all")} className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">全部服務</TabsTrigger>
@@ -436,75 +410,86 @@ export default function Site() {
               <CardTitle>宇辰國際物流有限公司</CardTitle>
               <CardDescription>Yu-Chen International Logistics Co., Ltd.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-               <div className="flex items-center gap-3">
-                 <MapPin className="text-[#003366] dark:text-blue-400" />
-                 <div>
-                   <div className="font-medium">總公司地址</div>
-                   <div className="text-sm text-muted-foreground">桃園市中壢區... (請填入完整地址)</div>
-                 </div>
-               </div>
-               <div className="flex items-center gap-3">
-                 <Phone className="text-[#003366] dark:text-blue-400" />
-                 <div>
-                   <div className="font-medium">聯絡電話</div>
-                   <div className="text-sm text-muted-foreground">03-123-4567</div>
-                 </div>
-               </div>
-               <div className="flex items-center gap-3">
-                 <Clock className="text-[#003366] dark:text-blue-400" />
-                 <div>
-                   <div className="font-medium">營業時間</div>
-                   <div className="text-sm text-muted-foreground">週一至週五 09:00 - 18:00</div>
-                 </div>
-               </div>
-               <Separator className="my-2" />
-               <div className="flex gap-2">
-                 <Button className="flex-1 bg-green-600 hover:bg-green-700 text-white">
-                   LINE 官方帳號
-                 </Button>
-                 <Button variant="outline" className="flex-1">
-                   Facebook 粉絲專頁
-                 </Button>
+            <CardContent className="space-y-6">
+               <div className="flex flex-col md:flex-row gap-6 items-start">
+                   {/* 左邊：聯絡文字 */}
+                   <div className="space-y-4 flex-1">
+                       <div className="flex items-center gap-3">
+                         <MapPin className="text-[#003366] dark:text-blue-400 shrink-0" />
+                         <div>
+                           <div className="font-medium">總公司地址</div>
+                           <div className="text-sm text-muted-foreground">桃園市桃園區縣府路256</div>
+                         </div>
+                       </div>
+                       <div className="flex items-center gap-3">
+                         <Phone className="text-[#003366] dark:text-blue-400 shrink-0" />
+                         <div>
+                           <div className="font-medium">聯絡電話</div>
+                           <div className="text-sm text-muted-foreground">03-3345369</div>
+                         </div>
+                       </div>
+                       <div className="flex items-center gap-3">
+                         <Clock className="text-[#003366] dark:text-blue-400 shrink-0" />
+                         <div>
+                           <div className="font-medium">營業時間</div>
+                           <div className="text-sm text-muted-foreground">週一至週五 08:00 - 17:00</div>
+                         </div>
+                       </div>
+                   </div>
+
+                   {/* 右邊：QR Code (移動到右上方) */}
+                   <div className="flex flex-col items-center justify-center p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-dashed border-slate-200 dark:border-slate-700">
+                     <img 
+                       src="/reports/LineQR.png" 
+                       alt="LINE QR Code" 
+                       className="w-28 h-28 object-contain mix-blend-multiply dark:mix-blend-normal" 
+                     />
+                     <span className="text-[10px] text-muted-foreground mt-1">掃描加入好友</span>
+                   </div>
                </div>
             </CardContent>
           </Card>
 
-          {/* 右側：FAQ */}
+          {/* 右側：FAQ (重點修正區：改用手動實作的 Accordion，確保功能正常) */}
           <div className="space-y-6">
             <Card className="rounded-2xl dark:bg-slate-900 dark:border-slate-800">
               <CardHeader>
                 <CardTitle>常見問題 (FAQ)</CardTitle>
               </CardHeader>
               <CardContent>
-                <Accordion type="single" collapsible className="w-full">
+                {/* ▼▼▼ 這裡改用一般的 div 和 button 來實作手風琴，不依賴外部元件 ▼▼▼ */}
+                <div className="w-full space-y-2">
                   {FAQ.map((f, i) => (
-                    <AccordionItem value={`item-${i}`} key={i} className="dark:border-slate-800">
-                      <AccordionTrigger className="text-left dark:text-slate-200">{f.q}</AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground">
-                        {f.a}
-                      </AccordionContent>
-                    </AccordionItem>
+                    <div key={i} className="border-b dark:border-slate-800 last:border-0">
+                      <button
+                        onClick={() => toggleFaq(i)}
+                        className="flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline w-full text-left dark:text-slate-200"
+                      >
+                        {f.q}
+                        <ChevronDown
+                          className={`h-4 w-4 shrink-0 transition-transform duration-200 ${
+                            openFaqIndex === i ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          openFaqIndex === i ? "max-h-40 opacity-100 mb-4" : "max-h-0 opacity-0"
+                        }`}
+                      >
+                        <div className="text-sm text-muted-foreground">
+                          {f.a}
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </Accordion>
+                </div>
+                {/* ▲▲▲ 修正結束 ▲▲▲ */}
               </CardContent>
             </Card>
           </div>
         </div>
       </Section>
-
-      {/* Footer */}
-      <footer className="border-t py-12 bg-slate-50 dark:bg-slate-950 dark:border-slate-800">
-        <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <div className="font-bold text-[#003366] dark:text-blue-400">宇辰國際物流有限公司</div>
-            <div className="text-xs text-muted-foreground uppercase">Yu-Chen International Logistics Co., Ltd.</div>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Yu-Chen Logistics. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

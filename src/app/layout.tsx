@@ -31,8 +31,7 @@ export default function RootLayout({
             <nav className="hidden md:flex gap-8 text-sm font-medium text-slate-700">
               <Link href="/" className="hover:text-blue-700 transition-colors">首頁</Link>
               <Link href="#about" className="hover:text-blue-700 transition-colors">關於我們</Link>
-              <Link href="#logistics" className="hover:text-blue-700 transition-colors">物流服務</Link>
-              <Link href="#global" className="hover:text-blue-700 transition-colors">全球據點</Link>
+              <Link href="#service" className="hover:text-blue-700 transition-colors">服務項目</Link>
               <Link href="#contact" className="hover:text-blue-700 transition-colors">聯絡我們</Link>
             </nav>
 
@@ -52,20 +51,6 @@ export default function RootLayout({
             <div>
               <h3 className="text-white font-bold text-lg mb-4">宇辰國際物流有限公司</h3>
               <p>誠信、效率、專業。致力於為客戶提供無縫接軌的全球物流解決方案。</p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold text-lg mb-4">聯絡資訊</h3>
-              <p>總公司：桃園市中壢區...</p>
-              <p>電話：03-123-4567</p>
-              <p>Email：service@yu-chen.com.tw</p>
-            </div>
-            <div>
-              <h3 className="text-white font-bold text-lg mb-4">快速連結</h3>
-              <ul className="space-y-2">
-                <li><Link href="#" className="hover:text-white">貨況查詢</Link></li>
-                <li><Link href="#" className="hover:text-white">人力資源</Link></li>
-                <li><Link href="#" className="hover:text-white">隱私權政策</Link></li>
-              </ul>
             </div>
           </div>
           <div className="container mx-auto px-4 mt-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
