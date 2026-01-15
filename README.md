@@ -1,5 +1,5 @@
 \
-**線上網站**: [https://www.jmpin.com.tw](https://www.jmpin.com.tw)
+**線上網站**: [https://www.yuchen606266.com.tw](https://www.yuchen606266.com.tw)
 
 ## 本機執行（Windows 範例：放到 `C:\JI_company`）
 

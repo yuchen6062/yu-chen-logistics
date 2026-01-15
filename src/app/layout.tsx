@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+// import Link from "next/link"; // 導覽列移除後，暫時用不到 Link，可以註解掉或移除
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,34 +18,17 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <body className={`${inter.className} min-h-screen flex flex-col bg-slate-50`}>
-        {/* 頂部導覽列 */}
-        <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-            {/* Logo 區 */}
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-blue-900 rounded flex items-center justify-center text-white font-bold text-lg">Y</div>
-              <span className="text-xl font-bold text-blue-900 tracking-tight">宇辰國際物流</span>
-            </div>
-            
-            {/* 選單連結 */}
-            <nav className="hidden md:flex gap-8 text-sm font-medium text-slate-700">
-              <Link href="/" className="hover:text-blue-700 transition-colors">首頁</Link>
-              <Link href="#about" className="hover:text-blue-700 transition-colors">關於我們</Link>
-              <Link href="#service" className="hover:text-blue-700 transition-colors">服務項目</Link>
-              <Link href="#contact" className="hover:text-blue-700 transition-colors">聯絡我們</Link>
-            </nav>
-
-            {/* 手機版選單按鈕 */}
-            <button className="md:hidden text-slate-700">☰</button>
-          </div>
-        </header>
+        
+        {/* 已移除全域導覽列 (Header) 
+            因為您已在個別頁面中加入 Navbar，移除這裡可避免重複顯示。
+        */}
 
         {/* 主要內容區 */}
         <main className="flex-grow">
           {children}
         </main>
 
-        {/* 頁尾 */}
+        {/* 頁尾 (Footer) - 通常建議保留在 Layout 中以維持全站一致，若您也想在個別頁面控制，也可以移除 */}
         <footer className="bg-slate-900 text-slate-300 py-10">
           <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
             <div>

@@ -26,12 +26,13 @@ import {
   ShieldCheck,
   Phone,
   ChevronDown,
-  FileText, // 新增圖示：用於報關文件
-  Container, // 新增圖示：用於貨櫃
+  FileText,
+  Container,
+  Menu, // 新增 Menu 圖示給手機版選單使用
 } from "lucide-react";
 
 // ----------------------------------
-// Data Configuration (物流業資料 - 針對海運/報關/內陸運輸優化)
+// Data Configuration
 // ----------------------------------
 
 type Product = {
@@ -58,8 +59,7 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["海運", "進出口", "整櫃/併櫃"],
     cta: "詳細介紹",
-    // 假設檔名如下，請確保您的資料夾內有此檔案
-    url: "/reports/國際海運進出口.html", 
+    url: "/reports/國際海運進出口.html",
   },
   {
     id: "p2",
@@ -115,7 +115,6 @@ const PRODUCTS: Product[] = [
     ],
     tags: ["倉儲", "理貨"],
     cta: "詳細介紹",
-    // 這是您指定的檔案
     url: "/reports/倉儲與加值服務.html",
   },
   {
@@ -157,6 +156,41 @@ const TAGS = ["海運", "報關", "陸運", "倉儲", "一條龍"] as const;
 // ----------------------------------
 // Sub-Components
 // ----------------------------------
+
+// 新增 Navbar 元件
+const Navbar = () => (
+  <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-slate-950/95 dark:border-slate-800">
+    <div className="container flex h-16 items-center justify-between mx-auto px-4 max-w-6xl">
+      <div className="flex items-center gap-2">
+        <a href="/" className="flex items-center space-x-2">
+          {/* 修改 LOGO 區塊 */}
+          <img 
+            src="/reports/Logo.png" 
+            alt="宇辰國際物流 Logo" 
+            className="h-10 w-auto object-contain" 
+          />
+          <span className="hidden font-bold sm:inline-block text-xl text-[#003366] dark:text-white">
+            宇辰國際物流
+          </span>
+        </a>
+      </div>
+      
+      {/* 電腦版選單 */}
+      <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#home" className="transition-colors hover:text-foreground/80 text-foreground/60">首頁</a>
+        <a href="#about" className="transition-colors hover:text-foreground/80 text-foreground/60">關於我們</a>
+        <a href="#service" className="transition-colors hover:text-foreground/80 text-foreground/60">服務項目</a>
+        <a href="#contact" className="transition-colors hover:text-foreground/80 text-foreground/60">聯絡我們</a>
+      </nav>
+
+      {/* 手機版選單按鈕 (示意) */}
+      <Button variant="ghost" className="md:hidden h-8 w-8 px-0">
+        <Menu className="h-5 w-5" />
+        <span className="sr-only">Toggle menu</span>
+      </Button>
+    </div>
+  </header>
+);
 
 const Section = ({
   id,
@@ -206,7 +240,6 @@ function ProductGrid({ items }: { items: Product[] }) {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-2 pt-4 border-t dark:border-slate-800">
-            {/* 修改這裡：使用 a 標籤包住 Button，並連結到 p.url */}
             <a 
               href={p.url} 
               target="_blank" 
@@ -274,6 +307,9 @@ export default function Site() {
   return (
     <div className="min-h-screen bg-background text-foreground relative dark:bg-slate-950 dark:text-slate-50 transition-colors duration-300">
       
+      {/* 插入 Navbar */}
+      <Navbar />
+
       {/* Hero Section */}
       <section id="home" className="relative overflow-hidden bg-slate-50/50 dark:bg-slate-950/50">
         <div className="max-w-6xl mx-auto px-4 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
@@ -430,7 +466,7 @@ export default function Site() {
                          <MapPin className="text-[#003366] dark:text-blue-400 shrink-0" />
                          <div>
                            <div className="font-medium">總公司地址</div>
-                           <div className="text-sm text-muted-foreground">桃園市桃園區縣府路256</div>
+                           <div className="text-sm text-muted-foreground">桃園市桃園區縣府路256巷16號</div>
                          </div>
                        </div>
                        <div className="flex items-center gap-3">
@@ -444,7 +480,7 @@ export default function Site() {
                          <Clock className="text-[#003366] dark:text-blue-400 shrink-0" />
                          <div>
                            <div className="font-medium">營業時間</div>
-                           <div className="text-sm text-muted-foreground">週一至週五 08:00 - 17:00</div>
+                           <div className="text-sm text-muted-foreground">週一至週五 09:00 - 18:00</div>
                          </div>
                        </div>
                    </div>
