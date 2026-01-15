@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專業進出口報關服務 - 宇辰國際物流</title>
+    <style>
+        /* 風格設定 (與海運頁面保持一致) */
+        :root {
+            --primary-color: #003366; /* 企業深藍 */
+            --secondary-color: #f0f4f8; /* 淺灰藍背景 */
+            --accent-color: #d9534f; /* 警告或重點色 (用於提醒法規重要性) */
+            --text-color: #333333;
+            --success-color: #28a745;
+        }
+        
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        /* 區塊通用 */
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 60px;
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 服務卡片設計 (報關需要強調條理) */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 10px;
+            padding: 35px;
+            background: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 10px 30px rgba(0,51,102,0.1);
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .service-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .service-card li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .service-card li::before {
+            content: "✓";
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* 流程圖區塊 */
+        .process-section {
+            background-color: var(--secondary-color);
+            border-radius: 20px;
+            margin-top: 80px;
+            padding: 50px;
+        }
+
+        .process-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .step h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* 重點提示框 */
+        .highlight-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 4px;
+        }
+        
+        .highlight-title {
+            font-weight: bold;
+            color: #856404;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* CTA */
+        .cta-btn {
+            display: block;
+            width: fit-content;
+            margin: 50px auto 0;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,51,102,0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            background-color: #004080;
+        }
+
+        /* Mobile RWD */
+        @media (max-width: 768px) {
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            .step {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <h2>專業進出口報關服務</h2>
+        <p class="subtitle">
+            精準的稅則歸類是通關順暢的關鍵。<br>
+            宇辰物流擁有經驗豐富的關務團隊，協助您處理繁瑣的進出口文件，大幅降低卡關風險與滯報費用。
+        </p>
+
+        <div class="service-grid">
+            <div class="service-card">
+                <h3>📥 進口報關服務</h3>
+                <p>協助貨物抵台後的通關程序，確保貨品符合台灣法規要求。</p>
+                <ul>
+                    <li>進口報單製作與申報 (G1)</li>
+                    <li>稅則 (HS Code) 預審與歸類諮詢</li>
+                    <li>代辦檢驗檢疫 (BSMI / FDA / 動植物檢疫)</li>
+                    <li>C1免審免驗 / C2文件審核 / C3驗貨陪同</li>
+                    <li>關稅與營業稅代繳服務</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>📤 出口報關服務</h3>
+                <p>確保您的產品順利輸出海外，並協助申請相關貿易證明。</p>
+                <ul>
+                    <li>出口報單製作與申報 (G5 / G3)</li>
+                    <li>ECFA / 一般產地證明書 (C/O) 代辦</li>
+                    <li>商業發票 (Invoice) 與裝箱單 (Packing) 審核</li>
+                    <li>三角貿易 (Switch B/L) 報關操作</li>
+                    <li>保稅倉庫進出倉申報</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3>🛡️ 關務諮詢與專案</h3>
+                <p>針對特殊貨物或複雜貿易條件，提供客製化的節稅與通關規劃。</p>
+                <ul>
+                    <li>整廠設備 / 超大物件專案通關</li>
+                    <li>暫時進出口 (展覽品 / 維修品) 申報</li>
+                    <li>退運復出口 / 國貨復進口處理</li>
+                    <li>關務行政救濟與稅則疑義諮詢</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="process-section">
+            <h3 class="process-title">進口通關 4 大步驟</h3>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h4>文件準備</h4>
+                    <p>提供 Invoice, Packing List 及 B/L 提單</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h4>連線申報</h4>
+                    <p>傳輸報單資料至海關系統，核定通關方式</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h4>繳稅/驗貨</h4>
+                    <p>繳納關稅與營業稅，配合海關查驗(若需)</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">4</div>
+                    <h4>放行提貨</h4>
+                    <p>取得放行通知，安排拖車送至指定地點</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <span class="highlight-title">⚠️ 為何報關專業度很重要？</span>
+            <p style="margin: 0; color: #666;">
+                錯誤的稅則歸類 (HS Code) 不僅會導致<strong>多繳關稅</strong>，嚴重時更可能因申報不實而面臨<strong>海關罰鍰</strong>或貨物被扣留。
+                我們會在申報前為您進行嚴格的文件預審，將風險降至最低。
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>

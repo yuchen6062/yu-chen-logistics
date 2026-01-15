@@ -13,8 +13,6 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// 移除可能故障的 Accordion 引用
-// import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"; 
 import { Separator } from "@/components/ui/separator";
 import {
   Truck,
@@ -27,11 +25,13 @@ import {
   Clock,
   ShieldCheck,
   Phone,
-  ChevronDown, // 新增箭頭圖示
+  ChevronDown,
+  FileText, // 新增圖示：用於報關文件
+  Container, // 新增圖示：用於貨櫃
 } from "lucide-react";
 
 // ----------------------------------
-// Data Configuration (物流業資料)
+// Data Configuration (物流業資料 - 針對海運/報關/內陸運輸優化)
 // ----------------------------------
 
 type Product = {
@@ -48,105 +48,111 @@ type Product = {
 const PRODUCTS: Product[] = [
   {
     id: "p1",
-    title: "國際海運服務",
-    subtitle: "整櫃 (FCL) / 併櫃 (LCL)",
+    title: "國際海運進出口",
+    subtitle: "全球航線 FCL/LCL 承攬",
     icon: <Ship className="w-5 h-5" />,
     bullets: [
-      "全球主要港口進出口承攬",
-      "特殊櫃、冷凍櫃、開頂櫃安排",
-      "每週固定船期，艙位保證",
+      "歐美、東南亞、大陸航線艙位保證",
+      "進出口整櫃 (FCL) 與併櫃 (LCL) 規劃",
+      "特殊櫃 (平板/開頂/冷凍) 運送安排",
     ],
-    tags: ["海運", "進出口"],
-    cta: "查詢船期",
-    url: "#",
+    tags: ["海運", "進出口", "整櫃/併櫃"],
+    cta: "詳細介紹",
+    // 假設檔名如下，請確保您的資料夾內有此檔案
+    url: "/reports/國際海運進出口.html", 
   },
   {
     id: "p2",
-    title: "國際空運快遞",
-    subtitle: "急件處理 / 戶對戶配送",
-    icon: <Plane className="w-5 h-5" />,
+    title: "專業進出口報關",
+    subtitle: "快速通關與稅則諮詢",
+    icon: <FileText className="w-5 h-5" />,
     bullets: [
-      "直飛/轉運航班靈活規劃",
-      "機場報關與提貨服務",
-      "電子零件、精密儀器專案運送",
+      "進出口報單製作與 C1/C2/C3 通關處理",
+      "ECFA、FTA 產地證明與稅則優惠申請",
+      "代辦各類檢驗 (BSMI/FDA/動植物檢疫)",
     ],
-    tags: ["空運", "急件"],
-    cta: "空運詢價",
-    url: "#",
+    tags: ["報關", "稅務", "檢驗代辦"],
+    cta: "詳細介紹",
+    url: "/reports/專業進出口報關.html",
   },
   {
     id: "p3",
-    title: "內陸運輸車隊",
-    subtitle: "全台配送網絡",
+    title: "國內內陸運輸",
+    subtitle: "CY 貨櫃拖車 / 散貨派送",
     icon: <Truck className="w-5 h-5" />,
-    bullets: ["自有貨櫃拖車與溫控車隊", "全台長短途併車/專車配送", "GPS 即時車輛動態追蹤"],
-    tags: ["陸運", "配送"],
-    cta: "預約派車",
-    url: "#",
+    bullets: [
+      "自有貨櫃拖車隊 (20呎/40呎/45呎)",
+      "基隆/台中/高雄港往返全台各地運送",
+      "特殊板車與氣墊車安排，確保貨物安全",
+    ],
+    tags: ["陸運", "拖車", "全台配送"],
+    cta: "詳細介紹",
+    url: "/reports/國內內陸運輸.html",
   },
   {
     id: "p4",
-    title: "倉儲物流管理",
-    subtitle: "第三方物流 (3PL) 解決方案",
-    icon: <Warehouse className="w-5 h-5" />,
+    title: "進出口一條龍服務",
+    subtitle: "門到門 (Door to Door) 整合",
+    icon: <Globe className="w-5 h-5" />,
     bullets: [
-      "保稅倉庫與一般倉庫租賃",
-      "進出貨理貨、貼標、重新包裝",
-      "WMS 系統庫存即時查詢",
+      "整合海運+報關+陸運，單一窗口服務",
+      "三角貿易 (Switch B/L) 與轉口操作",
+      "全程貨況追蹤，精準掌握交貨期",
     ],
-    tags: ["倉儲", "加值服務"],
-    cta: "參觀倉庫",
-    url: "#",
+    tags: ["一條龍", "門到門", "三角貿易"],
+    cta: "詳細介紹",
+    url: "/reports/進出口一條龍服務.html",
   },
   {
     id: "p5",
-    title: "進出口報關",
-    subtitle: "通關效率優化",
-    icon: <ShieldCheck className="w-5 h-5" />,
+    title: "倉儲與加值服務",
+    subtitle: "保稅/非保稅倉儲管理",
+    icon: <Warehouse className="w-5 h-5" />,
     bullets: [
-      "專業關務諮詢與稅則歸類",
-      "三角貿易與轉口貿易文件製作",
-      "代辦各類檢驗檢疫 (BSMI/FDA)",
+      "進出口拆櫃、裝櫃與理貨作業",
+      "標籤黏貼、重新包裝與分貨配送",
+      "配合電商物流與專案貨物暫存",
     ],
-    tags: ["報關", "稅務"],
-    cta: "諮詢關務",
-    url: "#",
+    tags: ["倉儲", "理貨"],
+    cta: "詳細介紹",
+    // 這是您指定的檔案
+    url: "/reports/倉儲與加值服務.html",
   },
   {
     id: "p6",
-    title: "專案物流 (Project Cargo)",
-    subtitle: "超大/超重貨物",
-    icon: <Anchor className="w-5 h-5" />,
+    title: "國際空運快遞",
+    subtitle: "急件樣品 / 精密儀器",
+    icon: <Plane className="w-5 h-5" />,
     bullets: [
-      "整廠設備輸出入規劃",
-      "散裝船租賃與裝卸",
-      "路線探勘與運輸風險評估",
+      "全球主要機場直飛與轉運航班",
+      "急件報關與當日提貨派送",
+      "半導體設備與精密儀器專案運送",
     ],
-    tags: ["專案", "重件"],
-    cta: "專案規劃",
-    url: "#",
+    tags: ["空運", "急件"],
+    cta: "詳細介紹",
+    url: "/reports/國際空運快遞.html",
   },
 ];
 
 const TECH_STACK = [
-  "Global Network", "WMS System", "GPS Tracking", "Customs Brokerage", "Supply Chain", "Last Mile", "Cold Chain", "Cross-border", "Door-to-Door", "FCL/LCL", "Air Freight", "ERP Integration"
+  "Customs Clearance", "Ocean Freight", "Inland Trucking", "Door-to-Door", "Bonded Warehouse", "Supply Chain", "Import/Export", "FCL/LCL", "Project Cargo", "Triangle Trade"
 ] as const;
 
 const STEPS = [
-  { title: "需求諮詢", desc: "確認貨物類型、起迄點、時效要求與預算範圍。" },
-  { title: "方案報價", desc: "規劃最佳運輸路徑（海/空/陸）並提供詳細費用明細。" },
-  { title: "安排運送", desc: "訂艙、提貨、報關、裝運，並提供貨物追蹤代碼。" },
-  { title: "貨物抵達", desc: "目的港清關、派送至指定地點，完成簽收證明 (POD)。" },
+  { title: "詢價與訂艙", desc: "確認貨物細節 (品名/重量/材積)，規劃最佳海運或空運航程。" },
+  { title: "報關與檢驗", desc: "準備商業發票與裝箱單，由專業人員代辦進出口通關與檢驗。" },
+  { title: "提貨與運輸", desc: "安排拖車至港口提櫃，或透過卡車進行內陸派送作業。" },
+  { title: "送達與簽收", desc: "貨物安全送達指定工廠或倉庫，完成 POD 簽收證明。" },
 ] as const;
 
 const FAQ = [
-  { q: "海運跟空運的材積如何計算？", a: "海運以 CBM (立方公尺) 計算；空運則依體積重 (長x寬x高/6000) 與實重取大者計價。" },
-  { q: "是否提供貨物保險？", a: "是的，我們與多家國際保險公司合作，可協助代辦全險 (All Risks) 保障您的貨物安全。" },
-  { q: "三角貿易的文件如何處理？", a: "我們具備豐富的 Switch B/L (換單) 經驗，能確保供應商資訊保密，順利完成跨國交易。" },
-  { q: "危險品 (DG) 可以運送嗎？", a: "可以，請提供 MSDS 表單，我們會依 IMDG Code 規範安排合適的危險品艙位與包裝。" },
+  { q: "進出口報關需要準備哪些文件？", a: "基本文件包含：商業發票 (Invoice)、裝箱單 (Packing List) 及提單 (B/L)。若涉及特殊貨品，可能需要產地證明 (C/O) 或檢驗合格證。" },
+  { q: "海運進口後的內陸運輸如何安排？", a: "我們擁有配合的貨櫃拖車與回頭車資源，當貨物抵港並完成報關後，可立即安排 CY 拖櫃或拆櫃後的散貨配送至全台各地。" },
+  { q: "如果貨物被海關查驗 (C3) 怎麼辦？", a: "我們會立即指派現場人員配合海關開箱驗貨，並協助解釋貨品內容，盡速排除疑慮以完成放行，降低滯報費風險。" },
+  { q: "三角貿易 (Triangle Trade) 如何保密供應商資料？", a: "我們專精於 Switch B/L (換單) 操作，在第三地進行文件置換，確保您的國外買家不會看到原始供應商的資訊。" },
 ] as const;
 
-const TAGS = ["海運", "空運", "陸運", "倉儲", "報關", "專案"] as const;
+const TAGS = ["海運", "報關", "陸運", "倉儲", "一條龍"] as const;
 
 // ----------------------------------
 // Sub-Components
@@ -200,9 +206,18 @@ function ProductGrid({ items }: { items: Product[] }) {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-2 pt-4 border-t dark:border-slate-800">
-             <Button className="w-full bg-[#003366] hover:bg-[#002244] text-white font-bold border-none dark:bg-blue-600 dark:hover:bg-blue-700">
-               {p.cta}
-             </Button>
+            {/* 修改這裡：使用 a 標籤包住 Button，並連結到 p.url */}
+            <a 
+              href={p.url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="w-full"
+            >
+              <Button className="w-full bg-[#003366] hover:bg-[#002244] text-white font-bold border-none dark:bg-blue-600 dark:hover:bg-blue-700">
+                {p.cta}
+              </Button>
+            </a>
+            
             <a href="#contact" aria-label={`詢問 ${p.title}`} className="w-full">
               <Button size="sm" variant="outline" className="w-full dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">立即諮詢</Button>
             </a>
@@ -220,14 +235,11 @@ function ProductGrid({ items }: { items: Product[] }) {
 export default function Site() {
   const [keyword, setKeyword] = useState("");
   const [activeTab, setActiveTab] = useState<string>("all");
-  
-  // ▼▼▼ 新增：FAQ 專用的狀態，用來控制哪一個被打開 (index) ▼▼▼
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
-  // ▲▲▲ 新增結束 ▲▲▲
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -269,11 +281,11 @@ export default function Site() {
           {/* 左側文字區塊 */}
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-              連結世界 <br />
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">運籌帷幄的物流夥伴</span>
+              海運・報關・運輸 <br />
+              <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">進出口物流的最佳夥伴</span>
             </h1>
             <p className="text-muted-foreground mt-4 text-lg">
-              宇辰國際物流 (Yu-Chen International) 整合海空運、倉儲與內陸運輸，為您的供應鏈提供最精準、快速的解決方案。
+              宇辰國際物流 (Yu-Chen International) 專注於國際海運承攬、專業報關與內陸運輸調度，為您提供一站式的高效供應鏈服務。
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="#service">
@@ -302,28 +314,28 @@ export default function Site() {
             <Card className="rounded-2xl shadow-xl border-t-4 border-t-[#003366] dark:bg-slate-900 dark:border-slate-800 dark:border-t-blue-500">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-[#003366] dark:text-blue-400" /> 全球物流網絡
+                  <Globe className="w-5 h-5 text-[#003366] dark:text-blue-400" /> 全球物流整合
                 </CardTitle>
-                <CardDescription>即時追蹤您的貨物動態</CardDescription>
+                <CardDescription>海運、報關、陸運 完美銜接</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-3 gap-4 text-center mb-4">
                   <div>
-                    <div className="text-xl font-bold text-[#003366] dark:text-blue-400">150+</div>
-                    <div className="text-[10px] text-muted-foreground">全球代理</div>
+                    <div className="text-xl font-bold text-[#003366] dark:text-blue-400">100%</div>
+                    <div className="text-[10px] text-muted-foreground">報關準確率</div>
                   </div>
                   <div>
-                    <div className="text-xl font-bold text-[#003366] dark:text-blue-400">99%</div>
-                    <div className="text-[10px] text-muted-foreground">準時送達</div>
+                    <div className="text-xl font-bold text-[#003366] dark:text-blue-400">Top</div>
+                    <div className="text-[10px] text-muted-foreground">優質車隊</div>
                   </div>
                   <div>
                     <div className="text-xl font-bold text-[#003366] dark:text-blue-400">24h</div>
-                    <div className="text-[10px] text-muted-foreground">客服支援</div>
+                    <div className="text-[10px] text-muted-foreground">專人服務</div>
                   </div>
                 </div>
                 <Separator className="my-4 dark:bg-slate-700" />
                 <ul className="text-sm space-y-2">
-                  {["報關：BSMI/FDA 專業代辦", "運輸：門到門一站式服務", "倉儲：即時庫存可視化"].map((txt, i) => (
+                  {["海運：全球主要港口進出口", "報關：專業稅則歸類諮詢", "陸運：全台貨櫃拖車配送"].map((txt, i) => (
                     <li key={i} className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-green-600 dark:text-green-400" /> {txt}
                     </li>
@@ -336,12 +348,12 @@ export default function Site() {
       </section>
 
       {/* About */}
-      <Section id="about" title="關於宇辰" subtitle="深耕台灣，佈局全球的物流專家">
+      <Section id="about" title="關於宇辰" subtitle="深耕台灣，連結世界的物流專家">
         <div className="grid md:grid-cols-3 gap-6">
           {[
-             { title: "專業團隊", desc: "擁有超過 20 年物流經驗的專業團隊，熟悉各國進出口法規與關務流程。", icon: <ShieldCheck /> },
-             { title: "全球據點", desc: "與全球 150+ 國家代理緊密合作，服務網絡遍及歐美、東南亞及中國大陸。", icon: <Globe /> },
-             { title: "智慧物流", desc: "導入 WMS 倉儲管理與 GPS 車隊系統，提供客戶即時、透明的貨況資訊。", icon: <Truck /> },
+             { title: "專業關務團隊", desc: "擁有資深報關人員，熟悉各國進出口法規、稅則歸類與檢驗規範，協助客戶快速通關。", icon: <FileText /> },
+             { title: "海運承攬優勢", desc: "與各大船公司簽訂合約，提供具競爭力的運價與穩定的艙位，整櫃併櫃皆可安排。", icon: <Ship /> },
+             { title: "強大內陸車隊", desc: "自有與協力車隊網絡遍布全台，提供從港口到門點 (Door) 的高效率運輸服務。", icon: <Truck /> },
           ].map((item, i) => (
             <Card key={i} className="rounded-2xl border-none shadow-sm bg-slate-50 dark:bg-slate-900/50 dark:border dark:border-slate-800">
               <CardHeader>
@@ -358,7 +370,7 @@ export default function Site() {
       </Section>
 
       {/* Products & services */}
-      <Section id="service" title="服務項目" subtitle="全方位的供應鏈解決方案">
+      <Section id="service" title="服務項目" subtitle="海運、報關、內陸運輸一條龍">
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v)} className="w-full">
           <TabsList className="flex flex-wrap bg-slate-100 dark:bg-slate-900 p-1">
             <TabsTrigger value="all" onClick={() => setActiveTab("all")} className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">全部服務</TabsTrigger>
@@ -368,7 +380,7 @@ export default function Site() {
           </TabsList>
           <div className="mt-4 flex items-center gap-2">
             <Input
-              placeholder="搜尋服務：例如 海運、報關、美國線..."
+              placeholder="搜尋服務：例如 報關、拖車、進口..."
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               className="dark:bg-slate-900 dark:border-slate-700"
@@ -381,7 +393,7 @@ export default function Site() {
       </Section>
 
       {/* Process */}
-      <Section id="process" title="服務流程" subtitle="標準化作業，確保貨物安全送達">
+      <Section id="process" title="標準化作業流程" subtitle="SOP 管控，確保進出口順暢">
         <div className="grid md:grid-cols-4 gap-6">
           {STEPS.map((s, i) => (
             <Card key={i} className="rounded-2xl dark:bg-slate-900 dark:border-slate-800">
@@ -401,7 +413,7 @@ export default function Site() {
       <Section
         id="contact"
         title="聯絡我們"
-        subtitle="立即諮詢，獲取最優惠的運費報價"
+        subtitle="立即諮詢，取得海運與報關優惠報價"
       >
         <div className="grid md:grid-cols-2 gap-8 items-start">
           {/* 左側：聯絡資訊 */}
@@ -437,7 +449,7 @@ export default function Site() {
                        </div>
                    </div>
 
-                   {/* 右邊：QR Code (移動到右上方) */}
+                   {/* 右邊：QR Code */}
                    <div className="flex flex-col items-center justify-center p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-dashed border-slate-200 dark:border-slate-700">
                      <img 
                        src="/reports/LineQR.png" 
@@ -450,14 +462,13 @@ export default function Site() {
             </CardContent>
           </Card>
 
-          {/* 右側：FAQ (重點修正區：改用手動實作的 Accordion，確保功能正常) */}
+          {/* 右側：FAQ */}
           <div className="space-y-6">
             <Card className="rounded-2xl dark:bg-slate-900 dark:border-slate-800">
               <CardHeader>
                 <CardTitle>常見問題 (FAQ)</CardTitle>
               </CardHeader>
               <CardContent>
-                {/* ▼▼▼ 這裡改用一般的 div 和 button 來實作手風琴，不依賴外部元件 ▼▼▼ */}
                 <div className="w-full space-y-2">
                   {FAQ.map((f, i) => (
                     <div key={i} className="border-b dark:border-slate-800 last:border-0">
@@ -484,7 +495,6 @@ export default function Site() {
                     </div>
                   ))}
                 </div>
-                {/* ▲▲▲ 修正結束 ▲▲▲ */}
               </CardContent>
             </Card>
           </div>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國際海運進出口服務 - 宇辰國際物流</title>
+    <style>
+        /* 基礎設定 */
+        :root {
+            --primary-color: #003366; /* 深藍色系 */
+            --accent-color: #0055aa;
+            --text-color: #333333;
+            --bg-light: #f8f9fa;
+        }
+        
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 區塊通用樣式 */
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        /* 服務卡片網格 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 30px;
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            color: #555;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        /* 優勢亮點區 */
+        .features {
+            background-color: var(--bg-light);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .feature-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .feature-item p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* CTA 按鈕 */
+        .cta-box {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <h2>國際海運進出口服務</h2>
+        <p class="subtitle">連結全球港口，提供穩定、高效的整櫃與併櫃運輸方案</p>
+
+        <div class="grid-container">
+            <div class="card">
+                <h3>🚢 整櫃運輸 (FCL)</h3>
+                <p>針對大宗貨物提供標準貨櫃運輸服務，與各大船公司簽訂長期合約，確保艙位穩定。</p>
+                <ul>
+                    <li>提供 20' / 40' / 40'HQ 標準貨櫃</li>
+                    <li>全球主要港口進出口承攬</li>
+                    <li>具競爭力的合約運價</li>
+                    <li>免租期 (Free Time) 申請與安排</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📦 併櫃服務 (LCL)</h3>
+                <p>適合中小企業或少量多樣的貨物，透過併櫃整合，大幅降低您的物流成本。</p>
+                <ul>
+                    <li>每週固定開櫃，船期密集</li>
+                    <li>專業 CFS 倉庫裝卸理貨</li>
+                    <li>計費公開透明，無隱藏費用</li>
+                    <li>可承接 DDU / DDP 門到門服務</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>❄️ 特殊櫃與專案貨物</h3>
+                <p>針對超大尺寸、重型機械或需溫控產品，提供專業的特殊櫃運輸解決方案。</p>
+                <ul>
+                    <li>冷凍櫃 (Reefer) 低溫運送</li>
+                    <li>開頂櫃 (Open Top) 與平板櫃 (Flat Rack)</li>
+                    <li>超寬超高貨物 (OOG) 綁紮固定</li>
+                    <li>整廠設備輸出專案規劃</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="features">
+            <h3 style="text-align: center; margin-bottom: 30px; color: var(--primary-color);">為什麼選擇我們的海運服務？</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>🌍 全球代理網絡</h4>
+                    <p>服務據點遍及歐美、東南亞及中國大陸，無縫銜接當地物流。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>⚓ 艙位保證</h4>
+                    <p>即使在旺季，我們也能透過合約優勢，優先為您爭取艙位。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📋 報關一條龍</h4>
+                    <p>整合海運與報關服務，減少溝通斷層，加速貨物放行。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🚚 內陸運輸整合</h4>
+                    <p>貨物抵港後，無縫銜接拖車派送，直達指定倉庫。</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+</html>

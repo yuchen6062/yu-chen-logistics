@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進出口一條龍服務 - 宇辰國際物流</title>
+    <style>
+        /* 風格設定：維持深藍色系，加入代表「連結」的青色漸層 */
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #0055aa;
+            --link-color: #1abc9c; /* 青綠色，代表暢通無阻 */
+            --bg-light: #f8f9fa;
+            --text-color: #2c3e50;
+        }
+        
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 標題區 */
+        .hero-text {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        p.subtitle {
+            font-size: 1.15rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 為什麼選擇一條龍 (痛點解決) */
+        .benefit-box {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 70px;
+            flex-wrap: wrap;
+        }
+
+        .benefit-item {
+            flex: 1;
+            min-width: 250px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 4px solid var(--link-color);
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .benefit-item h3 {
+            margin: 10px 0;
+            color: var(--primary-color);
+        }
+
+        /* 視覺化流程圖 (Timeline) */
+        .flow-container {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .flow-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* 連接線 (只在桌機版顯示) */
+        @media (min-width: 768px) {
+            .flow-steps::before {
+                content: '';
+                position: absolute;
+                top: 40px;
+                left: 50px;
+                right: 50px;
+                height: 4px;
+                background: #e9ecef;
+                z-index: 0;
+            }
+        }
+
+        .flow-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            min-width: 180px;
+        }
+
+        .step-circle {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border: 4px solid var(--link-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .flow-step:hover .step-circle {
+            transform: scale(1.1);
+            background-color: var(--link-color);
+            color: white;
+        }
+
+        .flow-step h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .flow-step p {
+            font-size: 0.9rem;
+            color: #666;
+            padding: 0 10px;
+        }
+
+        /* 三角貿易專區 (Highlight) */
+        .triangle-trade {
+            background: linear-gradient(135deg, #003366 0%, #001f3f 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 80px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .triangle-content {
+            flex: 2;
+        }
+
+        .triangle-icon {
+            flex: 1;
+            text-align: center;
+            font-size: 5rem;
+            opacity: 0.8;
+            display: none; /* 手機版隱藏 */
+        }
+
+        .triangle-content h3 {
+            color: #4db6ac; /* 亮青色 */
+            font-size: 1.8rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .triangle-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .triangle-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .triangle-list li::before {
+            content: "🔒"; /* 鎖頭符號代表保密 */
+            font-size: 1.2rem;
+        }
+
+        /* CTA */
+        .cta-wrap {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--link-color);
+            transform: translateY(-2px);
+        }
+
+        /* RWD */
+        @media (min-width: 992px) {
+            .triangle-icon {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .flow-step {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            .triangle-trade {
+                flex-direction: column;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <div class="hero-text">
+            <h2>進出口一條龍服務</h2>
+            <p class="subtitle">
+                從國外工廠到國內門口 (Door to Door)，我們為您整合海空運、報關與陸運。<br>
+                單一窗口對接，讓您專注於貿易接單，繁雜的物流交給我們。
+            </p>
+        </div>
+
+        <div class="benefit-box">
+            <div class="benefit-item">
+                <span class="benefit-icon">🤝</span>
+                <h3>單一窗口 (Single Window)</h3>
+                <p>無需分別聯繫船公司、報關行與卡車司機。我們擔任您的專屬物流管家，統籌所有環節。</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">📉</span>
+                <h3>降低成本 (Cost Saving)</h3>
+                <p>透過整合運輸與報關流程，減少溝通斷層造成的滯報費或額外倉租，提供最優化的物流成本。</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">⚡</span>
+                <h3>時效掌控 (Efficiency)</h3>
+                <p>精準銜接船期與車趟，貨物抵港後立即報關提貨，以最快速度送達指定地點。</p>
+            </div>
+        </div>
+
+        <div class="flow-container">
+            <div class="flow-title">全程物流・無縫接軌</div>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-circle">1</div>
+                    <h4>國外提貨</h4>
+                    <p>EXW/FOB 條款安排，前往國外工廠提貨或接收貨物。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-circle">2</div>
+                    <h4>國際運輸</h4>
+                    <p>海運(整櫃/併櫃)或空運安排，製作相關貿易文件。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-circle">3</div>
+                    <h4>進口報關</h4>
+                    <p>貨物抵台前預先申報，加速通關放行(C1/C2/C3)。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-circle">4</div>
+                    <h4>倉儲理貨</h4>
+                    <p>拆櫃、理貨、貼標，或暫存於保稅/一般倉庫。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-circle">5</div>
+                    <h4>內陸派送</h4>
+                    <p>安排拖車或卡車，安全送達客戶指定地址。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="triangle-trade">
+            <div class="triangle-content">
+                <h3>三角貿易 (Triangle Trade) 專案服務</h3>
+                <p>針對「台灣接單、國外出貨、第三地交貨」的貿易模式，我們提供專業的轉口物流規劃。</p>
+                <ul class="triangle-list">
+                    <li><strong>Switch B/L (換單操作)</strong>：於第三地切換提單，確保國外買家看不見原始工廠資訊，保障您的商業機密。</li>
+                    <li><strong>境外公司操作諮詢</strong>：協助規劃最合適的物流路徑與文件流程。</li>
+                    <li><strong>多國併櫃 (Buyer's Consolidation)</strong>：將不同國家的貨物併入同一貨櫃，統一運送至目的港。</li>
+                </ul>
+            </div>
+            <div class="triangle-icon">
+                🔄
+            </div>
+        </div>
+
+        <div class="cta-wrap">
+            <p style="margin-bottom: 20px; color: #666;">想簡化您的供應鏈管理？立即體驗一站式服務。</p>
+        </div>
+    </section>
+
+</body>
+</html>
